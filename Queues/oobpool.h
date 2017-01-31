@@ -100,6 +100,40 @@ public:
 		{
 			return index;
 		}
+
+		handle &operator++()
+		{
+			for (size_t i = 0; i < pool validity.size(); ++i)
+			{
+				if (poolValidity[i])
+				{
+					index = i;
+					return *this;
+				}
+			}
+			index = pool.size();
+			return *this;
+		}
+
+		T& operator*()
+		{
+			return value;
+		}
+
+		const T& operator*() const
+		{
+			return value;
+		}
+
+		T& operator->()
+		{
+			return value;
+		}
+
+		const T& operator->() const
+		{
+			return value;
+		}
 	};
 
 	// Adds the given object to the object pool.
@@ -115,12 +149,6 @@ public:
 		return handle(this, idx);
 	}
 
-	handle begin();
-
-	handle get(size_t idx);
-
-	handle end();
-
 	// Flags the object at the given index as invalid or unoccupied.
 	void pop(size_t idx)
 	{
@@ -131,6 +159,32 @@ public:
 	bool isValid(size_t idx) const
 	{
 		return poolValidity[idx];
+	}
+
+	handle begin() const
+	{
+		for (size_t i = 0; i < poolValidity.size(); ++i)
+		{
+			if (poolValidity[i])
+			{
+				return handle(this, i);
+			}
+		}
+
+		assert(false && "Can not iterate over pool with no elements.")
+	}
+
+	handle get(size_t idx) const
+	{
+		assert(idx < pool.size());
+		return handle(this, idx);
+	}
+
+	handle end() const
+	{
+		endIdx = pool.size();
+		handle han = handle(this, endIdx);
+		return han;
 	}
 
 	// Returns a reference to the object stored in the pool at the given index.
