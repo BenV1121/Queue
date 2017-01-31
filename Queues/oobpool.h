@@ -14,6 +14,9 @@ class obpool
 	// Backing array for object pool.
 	vector<T> pool;
 	vector<bool> poolValidity;
+	vector<size_t> nextList;
+
+	size_t openHead, closedHead;
 
 	// Returns the index of the first empty slot found.
 	// Returns -1 if an empty index cannot be found.
@@ -111,6 +114,12 @@ public:
 
 		return handle(this, idx);
 	}
+
+	handle begin();
+
+	handle get(size_t idx);
+
+	handle end();
 
 	// Flags the object at the given index as invalid or unoccupied.
 	void pop(size_t idx)
