@@ -7,14 +7,17 @@ size_t obpool::nextEmpty()
 
 obpool::obpool()
 {
+
 }
 
 obpool::~obpool()
 {
+
 }
 
 void obpool::pop(size_t idx)
 {
+
 }
 
 bool obpool::isValid(size_t idx) const
@@ -24,10 +27,12 @@ bool obpool::isValid(size_t idx) const
 
 obpool::handle::handle()
 {
+
 }
 
 obpool::handle::handle(obpool * poolPtr, size_t poolIdx)
 {
+
 }
 
 int & obpool::handle::value() const
@@ -37,6 +42,7 @@ int & obpool::handle::value() const
 
 void obpool::handle::free()
 {
+
 }
 
 bool obpool::handle::isValid() const
